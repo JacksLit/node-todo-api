@@ -17,8 +17,6 @@ if(!ObjectID.isValid(id)) {
     }).catch((e) => console.log('error.'));
 }
 
-
-
 // require user model
 // user.findById
 // check if there's a user

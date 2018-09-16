@@ -7,6 +7,8 @@ let {Users} = require('./models/users');
 
 let app = express();
 
+const {ObjectID} = require('mongodb');
+
 app.use(bodyParser.json());
 
 app.post('/todos', (req,res) => {
@@ -29,6 +31,30 @@ app.get('/todos', (req,res) => {
   });
 });
  
+// GET /todos/1234324
+app.get('/todos/:id', (req,res) => {
+  let id = req.params.id;
+
+  // Check if ObjectID is valid
+  if(!ObjectID.isValid(id)) {
+      console.log('ID is invalid!');
+      return res.status(404).send({text: 'ID is invalid'});
+    } else {
+      // If valid, check if it exists in db
+      Todo.findById(id).then((todo) => {
+        if (!todo) {
+          console.log('ID not found!');
+          return res.status(404).send({text: 'ID not found'});
+        }
+        // If valid and exists, return as object
+        console.log('Todo By Id', todo);
+        res.send({todo});
+      }).catch((e) => {
+        res.status(400).send();
+      });
+    }
+}); 
+
 app.listen(4000,() => {
   console.log('started on port 4000.');
 });
