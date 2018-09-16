@@ -37,17 +37,18 @@ app.get('/todos/:id', (req,res) => {
 
   // Check if ObjectID is valid
   if(!ObjectID.isValid(id)) {
-      console.log('ID is invalid!');
-      return res.status(404).send({text: 'ID is invalid'});
+      // console.log('ID is invalid!');
+      return res.status(404).send({text:'error'});
     } else {
       // If valid, check if it exists in db
       Todo.findById(id).then((todo) => {
         if (!todo) {
-          console.log('ID not found!');
-          return res.status(404).send({text: 'ID not found'});
+          // console.log('ID not found!');
+          return res.status(404).send({text:'error'});
         }
         // If valid and exists, return as object
-        console.log('Todo By Id', todo);
+        // not sure if the console.log should be commented out but I prefer it this way
+        // console.log('Todo By Id', todo);
         res.send({todo});
       }).catch((e) => {
         res.status(400).send();
