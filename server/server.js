@@ -60,7 +60,7 @@ app.get('/todos/:id', (req,res) => {
 });
 
 // GET delete todo by object id
-app.get('/delete/:id', (req, res) => {
+app.delete('/todos/:id', (req, res) => {
   let id = req.params.id;
 
   if(!ObjectID.isValid(id)) {
